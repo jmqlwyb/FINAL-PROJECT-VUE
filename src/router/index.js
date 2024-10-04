@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from '../views/Home.vue';
 import About from '../views/About.vue';
+import TodoList from '../components/TodoList.vue';
 
 
 
@@ -16,6 +17,12 @@ const routes = [
         path: '/about',
         name: 'About',
         component: About
+    },
+
+    {
+        path: '/todo',
+        name: 'TodoList',
+        component: TodoList
     }
 ];
 
