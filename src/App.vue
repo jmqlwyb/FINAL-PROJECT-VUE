@@ -1,43 +1,44 @@
 <template>
-  <div>
-    <center>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <router-link class="navbar-brand" to="/"></router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <router-link class="nav-link" to="/">Home</router-link>
-            </li>
-            <li class="nav-item ">
-              <router-link class="nav-link" to="/about">About</router-link>
-            </li>
-               <li class="nav-item ">
-              <router-link class="nav-link" to="/todo">TodoList</router-link>
-               </li>
-          </ul>
-        </div>
-      </div>
+  <div id="app">
+    <nav>
+      <ul>
+        <li><router-link to="/home">Home</router-link></li>
+        <li><router-link to="/products">Product</router-link></li>
+      </ul>
     </nav>
-    <router-view></router-view>
-    </center>
+
+    <router-view></router-view> 
   </div>
-  
 </template>
 
 <script>
 export default {
   name: 'App'
-}
+};
 </script>
 
-<style>
-.navbar {
-  justify-content: center;
+<style scoped>
+nav {
+  background-color: #f0f0f0;
+  padding: 10px;
 }
 
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  display: inline;
+  margin-right: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: #42b983;
+}
+
+a.router-link-exact-active {
+  font-weight: bold;
+}
 </style>
