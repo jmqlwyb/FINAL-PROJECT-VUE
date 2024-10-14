@@ -1,44 +1,51 @@
 <template>
-  <div id="app">
-    <nav>
-      <ul>
-        <li><router-link to="/home">Home</router-link></li>
-        <li><router-link to="/products">Product</router-link></li>
-      </ul>
+  <div class="app">
+    <nav class="navbar">
+      <router-link to="/home" class="nav-link">Home</router-link>
+      <router-link to="/products" class="nav-link">Products</router-link>
     </nav>
-
-    <router-view></router-view> 
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
 };
 </script>
 
 <style scoped>
-nav {
-  background-color: #f0f0f0;
-  padding: 10px;
+.app {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0; 
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
+.navbar {
+  background-color: #333; 
+  padding: 15px;
+  display: flex;
+  justify-content: center;
 }
 
-li {
-  display: inline;
-  margin-right: 20px;
-}
-
-a {
+.nav-link {
+  color: white;
   text-decoration: none;
-  color: #42b983;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
 }
 
-a.router-link-exact-active {
-  font-weight: bold;
+.nav-link:hover {
+  background-color: #555;
+  border-radius: 5px;
+}
+
+router-view {
+  flex: 1; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
