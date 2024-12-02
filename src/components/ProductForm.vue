@@ -1,85 +1,74 @@
 <template>
-  <form @submit.prevent="submitForm" class="product-form">
-    <div class="form-group">
-      <label for="name">Product Name:</label>
-      <input type="text" v-model="name" class="form-input" />
-    </div>
-    <div class="form-group">
-      <label for="price">Price:</label>
-      <input type="number" v-model="price" class="form-input" />
-    </div>
-    <div class="form-group">
-      <label for="description">Description:</label>
-      <textarea v-model="description" class="form-textarea"></textarea>
-    </div>
-    <button type="submit" class="submit-button">Add Product</button>
-  </form>
+  <div class="form-container">
+    <input v-model="name" placeholder="Product Name" />
+    <input type="number" v-model="price" placeholder="Price" />
+    <textarea v-model="description" placeholder="Description"></textarea>
+    <button @click="submitProduct">Add Product</button>
+  </div>
 </template>
 
 <script>
+import { db, collection, addDoc } from "../firebase/firebase"; // Corrected path
+
 export default {
   data() {
     return {
-      name: '',
-      price: 0,
-      description: ''
+      name: localStorage.getItem('name') || '',  // Load from localStorage or default to empty
+      price: localStorage.getItem('price') || '',  // Load from localStorage or default to empty
+      description: localStorage.getItem('description') || '',  // Load from localStorage or default to empty
     };
   },
+  watch: {
+    name(newValue) {
+      localStorage.setItem('name', newValue); // Save to localStorage when input changes
+    },
+    price(newValue) {
+      localStorage.setItem('price', newValue); // Save to localStorage when input changes
+    },
+    description(newValue) {
+      localStorage.setItem('description', newValue); // Save to localStorage when input changes
+    }
+  },
   methods: {
-    submitForm() {
+    async submitProduct() {
       const product = {
         name: this.name,
         price: this.price,
-        description: this.description
+        description: this.description,
       };
-      this.$emit('add-product', product);
+
+      try {
+        // Save product data to Firestore
+        const docRef = await addDoc(collection(db, "products"), product);
+        console.log("Document written with ID: ", docRef.id);
+        this.$emit('add-product', product);
+        this.resetForm();
+      } catch (error) {
+        console.error("Error adding document: ", error);
+      }
+    },
+    resetForm() {
+      // Clear localStorage and form fields after submission
       this.name = '';
-      this.price = 0;
+      this.price = '';
       this.description = '';
-    }
-  }
+      localStorage.removeItem('name');
+      localStorage.removeItem('price');
+      localStorage.removeItem('description');
+    },
+  },
 };
 </script>
 
 <style scoped>
-.product-form {
-  max-width: 400px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+.form-container {
+  margin-bottom: 20px;
 }
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-input,
-.form-textarea {
-  width: 100%;
+input, textarea {
+  display: block;
+  width: 90%;
+  margin: 5px 0;
   padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.form-input:focus,
-.form-textarea:focus {
-  border-color: #007BFF;
-  outline: none;
-}
-
-.submit-button {
-  background-color: #007BFF;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.submit-button:hover {
-  background-color: #0056b3;
+  border-radius: 5px;
 }
 </style>

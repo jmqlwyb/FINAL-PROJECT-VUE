@@ -1,51 +1,52 @@
 <template>
-  <div class="app">
-    <nav class="navbar">
-      <router-link to="/home" class="nav-link">Home</router-link>
-      <router-link to="/products" class="nav-link">Products</router-link>
+  <div id="app">
+    <nav>
+      <router-link to="/home">Home</router-link>
+      <router-link to="/products">Products</router-link>
     </nav>
     <router-view />
   </div>
 </template>
 
 <script>
+// Import components for routing
+import Home from './views/Home.vue';
+import Products from './views/Products.vue';
+
 export default {
   name: 'App',
+  components: {
+    Home,
+    Products
+  }
 };
 </script>
 
 <style scoped>
-.app {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0; 
+#app {
+  font-family: 'Arial', sans-serif;
+  background-color: #fdf8ff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
 
-.navbar {
-  background-color: #333; 
-  padding: 15px;
-  display: flex;
-  justify-content: center;
-}
-
-.nav-link {
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
-  transition: background-color 0.3s ease;
-}
-
-.nav-link:hover {
-  background-color: #555;
+nav {
+  background-color: #08070893;
+  padding: 10px;
   border-radius: 5px;
 }
 
-router-view {
-  flex: 1; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+nav a {
+  color: rgba(6, 49, 47, 0.656);
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
 }
 </style>

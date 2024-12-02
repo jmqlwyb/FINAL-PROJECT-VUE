@@ -1,21 +1,20 @@
 <template>
-  <div>
-    <ul class="product-list">
-      <li v-for="(product, index) in products" :key="index" class="product-item">
-        <div v-if="editingIndex === index">
-          <input v-model="editedProduct.name" placeholder="Edit name" />
-          <input v-model="editedProduct.price" placeholder="Edit price" />
-          <textarea v-model="editedProduct.description"></textarea>
-          <button @click="saveEdit(index)">Save</button>
-        </div>
-        <div v-else>
-          <strong>{{ product.name }}</strong> - ${{ product.price }}
-          <p>{{ product.description }}</p>
-          <button @click="editProduct(index)">Edit</button>
-        </div>
-      </li>
-    </ul>
-  </div>
+  <ul class="product-list">
+    <li v-for="(product, index) in products" :key="index">
+      <div v-if="editingIndex === index" class="edit-form">
+        <input v-model="editedProduct.name" placeholder="Edit name" />
+        <input type="number" v-model="editedProduct.price" placeholder="Edit price" />
+        <textarea v-model="editedProduct.description" placeholder="Edit description"></textarea>
+        <button @click="saveEdit(index)">Save</button>
+        <button @click="cancelEdit">Cancel</button>
+      </div>
+      <div v-else>
+        <strong>{{ product.name }}</strong> - ${{ product.price }}
+        <p>{{ product.description }}</p>
+        <button @click="editProduct(index)">Edit</button>
+      </div>
+    </li>   
+  </ul>
 </template>
 
 <script>
@@ -24,19 +23,26 @@ export default {
   data() {
     return {
       editingIndex: null,
-      editedProduct: {}
+      editedProduct: {},
     };
   },
   methods: {
     editProduct(index) {
       this.editingIndex = index;
-      this.editedProduct = { ...this.products[index] };
+      this.editedProduct = { ...this.products[index] }; 
     },
     saveEdit(index) {
-      this.$emit('edit-product', { index, product: this.editedProduct });
+      this.$emit('edit-product', { index, product: this.editedProduct }); 
+      this.resetEdit();
+    },
+    cancelEdit() {
+      this.resetEdit();
+    },
+    resetEdit() {
       this.editingIndex = null;
-    }
-  }
+      this.editedProduct = {};
+    },
+  },
 };
 </script>
 
@@ -46,16 +52,25 @@ export default {
   padding: 0;
 }
 
-.product-item {
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
-  margin: 10px 0;
-  padding: 15px;
-  transition: background 0.3s ease;
+.edit-form {
+  margin-bottom: 10px;
 }
 
-.product-item:hover {
-  background: rgba(255, 255, 255, 1);
+button {
+  margin: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:first-of-type {
+  background-color: #c2a0b3;
+  color: rgba(5, 31, 35, 0.626);
+}
+
+button:last-of-type {
+  background-color: #dddbdb;
+  color: rgba(5, 31, 35, 0.626);
 }
 </style>
