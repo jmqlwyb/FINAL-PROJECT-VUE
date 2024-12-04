@@ -1,5 +1,6 @@
 <template>
   <div class="form-container">
+    <h2>Add Product</h2>
     <input v-model="name" placeholder="Product Name" />
     <input type="number" v-model="price" placeholder="Price" />
     <textarea v-model="description" placeholder="Description"></textarea>
@@ -13,9 +14,9 @@ import { db, collection, addDoc } from "../firebase/firebase"; // Corrected path
 export default {
   data() {
     return {
-      name: localStorage.getItem('name') || '',  // Load from localStorage or default to empty
-      price: localStorage.getItem('price') || '',  // Load from localStorage or default to empty
-      description: localStorage.getItem('description') || '',  // Load from localStorage or default to empty
+      name: localStorage.getItem('name') || '', // Load from localStorage or default to empty
+      price: localStorage.getItem('price') || '', // Load from localStorage or default to empty
+      description: localStorage.getItem('description') || '', // Load from localStorage or default to empty
     };
   },
   watch: {
@@ -62,13 +63,63 @@ export default {
 
 <style scoped>
 .form-container {
-  margin-bottom: 20px;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 20px;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  width: 400px;
+  margin: 0 auto;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); */
 }
+
+h2 {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+  text-decoration: underline;
+}
+
 input, textarea {
   display: block;
-  width: 90%;
-  margin: 5px 0;
-  padding: 8px;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid #000000;
   border-radius: 5px;
+  background-color: #f9f9f9;
+  color: #000000;
+  font-family: 'Arial', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  background-color: #e6e6e6;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 1rem;
+  border: 2px solid #000000;
+  background-color: #000000;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 5px;
+  font-family: 'Arial', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+button:active {
+  transform: scale(0.98);
 }
 </style>
